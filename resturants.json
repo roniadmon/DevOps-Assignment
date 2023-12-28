@@ -1,0 +1,24 @@
+[{
+"name": "Pizza hut",
+"style": "Italian",
+"address": "wherever street 99, somewhere",
+"openHour": "09:00",
+"clouseHour": "23:00",
+"vegetarian" : "yes" 
+} ,
+{
+"name": "Fat Cow",
+"style": "Burgers",
+"address": "Dizengoff street 263, Tel Aviv",
+"openHour": "12:00",
+"clouseHour": "02:00",
+"vegetarian" : "no"
+} ,
+{
+"name": "Rainbow",
+"style": "Burgers",
+"address": "Iban Gabirol 99, Tel Aviv",
+"openHour": "12:00",
+"clouseHour": "23:00",
+"vegetarian" : "yes" 
+} ]

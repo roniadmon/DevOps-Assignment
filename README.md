@@ -35,3 +35,4 @@ This repository has a system manages a list of restaurants and their properties 
    terraform apply
 
 4. ** Run the CI and then the CD pipeline
+ 
