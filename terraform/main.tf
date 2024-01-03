@@ -32,6 +32,7 @@ resource "aws_key_pair" "recommendations" {
 
 # Create an EC2 instance
 resource "aws_instance" "recommendations" {
+  name          = "recommendations"
   ami           = "ami-02cad064a29d4550c " 
   instance_type = "t2.micro"
   key_name      = aws_key_pair.recommendations.key_name

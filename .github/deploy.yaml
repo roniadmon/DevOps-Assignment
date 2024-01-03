@@ -1,0 +1,42 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set SSH    
+      env:
+          PEM_CONTENTS: ${{ secrets.EC2_PEM_FILE }}
+      run: |
+        ssh-keyscan -H recommendations >> ~/.ssh/known_hosts
+        echo "$PEM_CONTENTS" > private_key.pem
+        chmod 600 private_key.pem
+
+    - name: Make sure MongoDB container is running 
+      run: |
+        ssh -i private_key.pem ec2-user@recommendations 'docker ps -q --filter "name=mongodb" | grep -q . || docker run -d --name mongodb -p 27017:27017 mongo:latest'
+    
+    - name: Deploy to EC2
+        ssh -i private_key.pem ec2-user@recommendations 'git pull origin main && pip install -r requirements.txt && python main.py'
+        
+    - name: Remove SSH key    
+      run: rm private_key.pem
+
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: '#deployments'
+          SLACK_TITLE: 'Deployed to EC2'
