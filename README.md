@@ -17,8 +17,8 @@ This repository has a system manages a list of restaurants and their properties 
 [ ] Please include all code required to set up the system
 [ ] The system has to be cloud native, with a preference for Azure, but also GCP or AWS are an option, with a simple architecture that will require minimal amount of maintenance.
 [ ] The system should be written in full IaC style, I should be able to fully deploy it on my own cloud instance without making manual changes. Use Terraform for configuring the required cloud resources.
-[ ] There should be some backend storage mechanism that holds the history of all requests and returned responses. Consider that the backend data stored is highly confidential.
-[ ] Make sure the system is secure. However there is no need for the user to authenticate with the system (Assume its a free public service)
+[X] There should be some backend storage mechanism that holds the history of all requests and returned responses. Consider that the backend data stored is highly confidential.
+[X] Make sure the system is secure. However there is no need for the user to authenticate with the system (Assume its a free public service)
 [ ] The system code should be deployed using an automatic CI CD pipeline following any code change, including when adding or updating restaurants.
 
 ## Setup Instructions

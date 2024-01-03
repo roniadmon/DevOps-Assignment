@@ -1,7 +1,5 @@
-from datetime import datetime
-from pymongo import MongoClient
-from bson import ObjectId
 from config import config
+from pymongo import MongoClient
 
 
 class Database(object):

@@ -1,18 +1,18 @@
-import datetime
+from datetime import datetime
+from flask import Flask, request
 from Logger import Logger
 from Restaurant import Restaurant
-from flask import Flask, request
 
 app = Flask(__name__)
 
 @app.route('/api/restaurants', methods=['POST'])
 def get_restaurants():
     logger = Logger()
-    time_stamp = datetime.datetime.now()
-    logger.trace(time_stamp,"request",request.args)
+    time_stamp = datetime.now()
+    params = request.get_json(force=True)
+    logger.trace(time_stamp,"request",params)
     
     #validate_params()
-    params = request.get_json(force=True)
     
     filtered_restaurants=Restaurant().get_restaurant_by_params(params)
     logger.trace(time_stamp,"response",filtered_restaurants)
@@ -23,7 +23,7 @@ def get_restaurants():
 @app.route('/api/restaurants/add', methods=['POST'])
 def add_restaurant():
     logger = Logger()
-    time_stamp = datetime.datetime.now()
+    time_stamp = datetime.now()
     logger.trace(time_stamp,"request",request.args)
     #validate
     restaurant = Restaurant()

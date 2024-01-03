@@ -1,13 +1,4 @@
 {
-    "logs": {
-        "destination":"db",
-        "config":{
-            "url" : "mongodb://localhost:27017/",
-            "name" :"db",
-            "user" :"mongo",
-            "password" :"password"
-        }
-    },
     "db": {
             "url" : "mongodb://localhost:27017/",
             "name" :"recommendations",
