@@ -20,16 +20,17 @@ jobs:
       env:
           PEM_CONTENTS: ${{ secrets.EC2_PEM_FILE }}
       run: |
-        ssh-keyscan -H recommendations >> ~/.ssh/known_hosts
+        ssh-keyscan -H www.restaurants.recommendations.com >> ~/.ssh/known_hosts
         echo "$PEM_CONTENTS" > private_key.pem
         chmod 600 private_key.pem
 
     - name: Make sure MongoDB container is running 
       run: |
-        ssh -i private_key.pem ec2-user@recommendations 'docker ps -q --filter "name=mongodb" | grep -q . || docker run -d --name mongodb -p 27017:27017 mongo:latest'
+        ssh -i private_key.pem ec2-user@www.restaurants.recommendations.com `
+        "docker ps -q --filter 'name=mongodb' | grep -q . || docker run -d --name mongodb -p 27017:27017 -v /data:/data/db -e MONGO_INITDB_ROOT_PASSWORD=$PASSWORD -e MONGODB_INITDB_ROOT_USERNAME=$USERNAME mongodb/mongodb-community-server:latest"
     
     - name: Deploy to EC2
-        ssh -i private_key.pem ec2-user@recommendations 'git pull origin main && pip install -r requirements.txt && python main.py'
+        ssh -i private_key.pem ec2-user@www.restaurants.recommendations.com "git pull origin main && pip install -r requirements.txt && python main.py"
         
     - name: Remove SSH key    
       run: rm private_key.pem
